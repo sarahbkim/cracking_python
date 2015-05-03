@@ -202,6 +202,7 @@ def findMinCombination2(A):
     # mark presence of element x, change sign val at index x to neg 
     # traverse arr again and print first idx with pos val 
 
+# the below soluation doesn't work ... 
 def segregate(A):
     # return idx for pos start
     j = 0
@@ -217,7 +218,7 @@ def find_missing_positive(A):
         try:
             return A[0]
         except:
-            return A
+            return 0
     
     target_arr = [None] * (len(A) + 1)
     minIdx = min(A)
@@ -232,6 +233,7 @@ def find_missing_positive(A):
 def find_missing_neg_in_arr(A):
     start = segregate(A)
     return find_missing_positive(A[start:])
+
 
 
 class CodilityTests(unittest.TestCase):
@@ -273,7 +275,6 @@ class CodilityTests(unittest.TestCase):
 
         arr2 = [-30, 0, 4, -6, 2, 4]
         self.assertEqual(find_missing_neg_in_arr(arr2), 3)
-
 
 
 if __name__ == '__main__':
