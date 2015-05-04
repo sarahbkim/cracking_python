@@ -43,6 +43,21 @@ def prefix_sums(A):
     return P
 
 arr = [1, 2, 3, 4, 5, 6]
-print prefix_sums(arr)
+prefix_sums(arr)
 
+'''
+get totals of an array faster by using prefix sums
+'''
+def get_total(A):
+    prefixed = prefix_sums(A)
+    n = len(A)
+    return prefixed[n]
 
+print get_total(arr)
+
+def get_total_slice(A, x, y):
+    prefixed = prefix_sums(A)
+    print prefixed[y+1], prefixed[x], prefixed
+    return prefixed[y+1] - prefixed[x]
+
+print get_total_slice(arr, 1, 3)
