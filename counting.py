@@ -61,3 +61,59 @@ def get_total_slice(A, x, y):
     return prefixed[y+1] - prefixed[x]
 
 print get_total_slice(arr, 1, 3)
+
+
+'''
+A non-empty zero-indexed array A consisting of N integers is given. The consecutive elements of array A represent consecutive cars on a road.
+Array A contains only 0s and/or 1s:
+0 represents a car traveling east,
+1 represents a car traveling west.
+The goal is to count passing cars. We say that a pair of cars (P, Q), where 0 ≤ P < Q < N, is passing when P is traveling to the east and Q is traveling to the west.
+For example, consider array A such that:
+  A[0] = 0
+  A[1] = 1
+  A[2] = 0
+  A[3] = 1
+  A[4] = 1
+We have five pairs of passing cars: (0, 1), (0, 3), (0, 4), (2, 3), (2, 4).
+Write a function:
+
+'''
+
+# brute force, O(n^2) solution...
+def solution(A):
+    cars, start = 0, 0
+    
+    while start < len(A):
+        
+        rest = A[start+1:]
+        i = 0
+        while i < len(rest):
+            
+            if A[start] == 0 and rest[i] == 1:
+                cars = cars + 1
+            i = i + 1
+        start = start + 1
+    
+    return cars
+
+def solution(A):
+    east = [0] * len(A)
+
+    start = 1
+    while start < len(A):
+        if A[start-1] == 0:
+            east[start] = east[start-1] + 1
+        else:
+            east[start] = east[start-1]
+        start = start + 1
+       
+    cars = 0
+    i = 1
+    while i < len(A):
+        if A[i] == 1:
+            cars = cars + (east[i] * 1)
+            if cars > 1000000000:
+                return -1
+        i = i + 1
+    return cars
