@@ -31,9 +31,7 @@ def selectionSort(arr):
             if arr[j] < arr[min_i]: # compare values at j and min_i
                 min_i = j
             j += 1
-        temp = arr[i]
-        arr[i] = arr[min_i]
-        arr[min_i] = temp
+        arr[i], arr[min_i] = arr[min_i], arr[i] #swap
         i += 1
     return arr
 

@@ -15,38 +15,47 @@ import unittest
 # then split the list to L and R and partition again
 
 
-## quick sort
-def quick_sort(arr, start, end):
+# ## quick sort
+
+
+
+def quicksort(arr, start, end):
     if start < end:
         idx = partition(arr, start, end)
-        quick_sort(arr, start, idx - 1)
-        quick_sort(arr, idx + 1, end)
+        quicksort(arr, start, idx-1)
+        quicksort(arr, idx+1, end)
     return arr
 
-## partition
-# select pivot and move elems less than pivot to left, others towards the right
-# returns pivot idx to the quick sort
-# params: arr, start, end
+
+# ## partition
+# # select pivot and move elems less than pivot to left, others towards the right
+# # returns pivot idx to the quick sort
+# # params: arr, start, enddef partition2(arr, start, end):
 def partition(arr, start, end):
-    pivot = arr[end]
-    p_index = start
-    i = start
+    pivot = arr[end] # choose last element to be the pivot
+    p_idx = start # have p_idx at start of arr
+
+    i = start 
     while i < end:
+        # if item is less than pivot, then swap the items
         if arr[i] <= pivot:
-            arr[i], arr[p_index] = arr[p_index], arr[i]
-            p_index += 1
+            arr[i], arr[p_idx] = arr[p_idx], arr[i]
+            # increment p index
+            p_idx += 1
         i += 1
-
-    arr[p_index], arr[end] = arr[end], arr[p_index]
-
-    return p_index
-
+    # swap the pivot item with current p_idx 
+    arr[p_idx], arr[end] = arr[end], arr[p_idx]
+    return p_idx
 
 
 class QuickSortTest(unittest.TestCase):
     def test(self):
         arr = [5, 10, 3, 4, 1]
-        self.assertEquals(quick_sort(arr, 0, len(arr)-1), [1, 3, 4, 5, 10])
+        self.assertEquals(quicksort(arr, 0, len(arr)-1), [1, 3, 4, 5, 10])
+
+    def test2(self):
+        arr = [6, 10, 3, 4, 1, 10, 3, 4, 1]
+        self.assertEquals(quicksort(arr, 0, len(arr)-1), [1, 1, 3, 3, 4, 4, 6, 10, 10])
 
 if __name__ == '__main__':
     unittest.main()

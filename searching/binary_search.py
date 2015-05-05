@@ -1,16 +1,29 @@
 #!/usr/bin/python
 import unittest
 
+# def binary_search(arr, item):
+#     if len(arr)==0:
+#         return -1
+#     else:
+#         mid = len(arr)/2
+#         if item == arr[mid]:
+#             return mid
+#         else:
+#             return binary_search(arr[0:mid-1], item)  # left side
+#             return binary_search(arr[mid+1:-1], item)
+
+
 def binary_search(arr, item):
-    if len(arr)==0:
+    n = len(arr)
+    if n < 1:
         return -1
     else:
-        mid = len(arr)/2
-        if item == arr[mid]:
+        mid = n/2
+        if arr[mid] == item:
             return mid
         else:
-            return binary_search(arr[0:mid-1], item)  # left side
-            return binary_search(arr[mid+1:-1], item)
+            return binary_search(arr[0: mid], item)
+            return binary_search(arr[mid+1, n-1], item)
 
 
 class binary_search_test(unittest.TestCase):

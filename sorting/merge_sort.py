@@ -9,54 +9,48 @@ import unittest
 ## Time: O(n log(n))
 ### Space: Theta(n log(n))
 
-# for python, slice the array instead of passing indexes
-def merge_sort(lst):
-    """Sorts the input list using the merge sort algorithm.
+# # for python, slice the array instead of passing indexes
 
-    >>> lst = [4, 5, 1, 6, 3]
-    >>> merge_sort(lst)
-    [1, 3, 4, 5, 6]
-    """
-    if len(lst) <= 1:
-        return lst
-    mid = len(lst) // 2
-    left = merge_sort(lst[:mid])
-    right = merge_sort(lst[mid:])
-    return merge(left, right, lst)
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    else:
+    # split the array if len(arr) is greater than 1
+        # calculate mid point
+        mid = len(arr)/2
+        # get L and R sides
+        left = merge_sort(arr[:mid])
+        right = merge_sort(arr[mid:])
+        # merge both sides
+        return merge(left, right, arr)
 
 
-def merge(left, right, lst):
-    len_l, len_r= len(left), len(right)
+def merge(left, right, arr): 
+    len_l, len_r = len(left), len(right)
     i, j, k = 0, 0, 0
+
     while i < len_l and j < len_r:
-        if left[i] < right[j]:
-            lst[k] = left[i]
+        # if left item is smaller, update the original array
+        if left[i] <= right[j]:
+            arr[k] = left[i]
             i += 1
+            k += 1
         else:
-            lst[k] = right[j]
+            arr[k] = right[j]
             j += 1
-        k += 1
+            k += 1
 
     while i < len_l:
-        lst[k] = left[i]
+        arr[k] = left[i]
         i += 1
         k += 1
 
     while j < len_r:
-        lst[k] = right[j]
+        arr[k] = right[j]
         j += 1
         k += 1
 
-    return lst
-
-# def merge(L, R):
-    # if not L:
-    #     return R
-    # if not R:
-    #     return L
-    # if L[0] < R[0]:
-    #     return [L[0]] + merge(L[1:], R)
-    # return [R[0]] + merge(L, R[1:])
+    return arr
 
 
 class MergeSortTest(unittest.TestCase):
