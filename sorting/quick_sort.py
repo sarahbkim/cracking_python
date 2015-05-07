@@ -34,15 +34,13 @@ def quicksort(arr, start, end):
 def partition(arr, start, end):
     pivot = arr[end] # choose last element to be the pivot
     p_idx = start # have p_idx at start of arr
-
-    i = start 
-    while i < end:
+    while start < end:
         # if item is less than pivot, then swap the items
-        if arr[i] <= pivot:
-            arr[i], arr[p_idx] = arr[p_idx], arr[i]
+        if arr[start] <= pivot:
+            arr[start], arr[p_idx] = arr[p_idx], arr[start]
             # increment p index
             p_idx += 1
-        i += 1
+        start += 1
     # swap the pivot item with current p_idx 
     arr[p_idx], arr[end] = arr[end], arr[p_idx]
     return p_idx
