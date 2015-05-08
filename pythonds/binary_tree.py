@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from collections import deque
 import unittest
+from decimal import Decimal
 
 class BinaryTree():
     def __init__(self, rootid):
@@ -135,10 +136,8 @@ class BinaryTree():
         while len(queue)!=0:
             for current in queue:
                 temp = []
-                print current.getNodeValue()
                 if current.getLeftChild() != None: temp.append(current.getLeftChild())
                 if current.getRightChild() != None: temp.append(current.getRightChild())
-                print self.print_list_vals(temp)
             queue = temp
 
     # need to use a queue, and is not a recursive implementation
@@ -152,9 +151,86 @@ class BinaryTree():
                 if n.getRightChild() != None: nextLevel.append(n.getRightChild())
             queue = nextLevel
 
+
+
+'''
+Given the root of a binary search tree and 2 numbers min and max, 
+trim the tree such that all the numbers in the new tree are between min 
+and max (inclusive). The resulting tree should still be a valid binary 
+search tree.
+
+do a post-order traversal 
+
+assumes that the tree is a valid binary search tree! 
+'''
+def trim(tree, minV, maxV):
+    if not tree:
+        return
+
+    if tree.getLeftChild():
+        trim(tree.getLeftChild(), minV, maxV)
+    if tree.getRightChild():
+        trim(tree.getRightChild(), minV, maxV)
+
+    items = []
+    if minV <= tree.getNodeValue() <= maxV:
+        items.append(tree.getNodeValue())
+        return items
+    if tree.getNodeValue() < minV:
+        return tree.getRightChild()
+    if tree.getNodeValue() > maxV:
+        return tree.getLeftChild()
+
+def check_binary_search(tree, lastNode=Decimal('-Infinity')):
+    if tree is None:
+        return True
     
+    if not check_binary_search(tree.getLeftChild(), lastNode):
+        return False
+    print tree.getNodeValue(), lastNode
+    if tree.getNodeValue() < lastNode:
+        return False
+
+    lastNode = tree.getNodeValue()
+    
+    return check_binary_search(tree.getRightChild(), lastNode)
+
 
 class binary_search_test(unittest.TestCase):
+    def test_check_b(self):
+        # tree = BinaryTree(8)
+        # tree.insertLeftChild(3)
+        # tree.insertRightChild(10)
+        # tree.getLeftChild().insertLeftChild(1)
+        # tree.getLeftChild().insertRightChild(6)
+        # tree.getRightChild().insertLeftChild(14)
+        # tree.getRightChild().getLeftChild().insertLeftChild(13)
+        # tree.getLeftChild().getLeftChild().insertLeftChild(4)
+        # tree.getLeftChild().getLeftChild().insertRightChild(7)
+        
+        # self.assertEquals(check_binary_search(tree), True)
+
+        tree2 = BinaryTree(8)
+        tree2.insertLeftChild(1)
+        tree2.insertRightChild(20)
+        self.assertEquals(check_binary_search(tree2), False)
+
+    # def test_trim(self):
+    #     tree = BinaryTree(8)
+    #     tree.insertLeftChild(3)
+    #     tree.insertRightChild(10)
+    #     tree.getLeftChild().insertLeftChild(1)
+    #     tree.getLeftChild().insertRightChild(6)
+    #     tree.getRightChild().insertLeftChild(14)
+    #     tree.getRightChild().getLeftChild().insertLeftChild(13)
+    #     tree.getLeftChild().getLeftChild().insertLeftChild(4)
+    #     tree.getLeftChild().getLeftChild().insertRightChild(7)
+        
+    #     x = trim(tree, 6, 12)
+
+    #     self.assertEquals( x, [3, 8, 10])
+
+
     def test_reverse_level_order(self):
         tree = BinaryTree(1)
         tree.insertLeftChild(2)
